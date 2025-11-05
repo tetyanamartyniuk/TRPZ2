@@ -5,6 +5,19 @@ import java.util.List;
 
 public
 class HttpServer {
+
+    private ServerState state;
+
+    public HttpServer() {
+        this.state = new StoppedServer(this);
+    }
+
+    public void setState(ServerState state) {
+        this.state = state;
+    }
+    public void start() { state.start(); }
+    public void stop() { state.stop(); }
+    public void handleRequest() { state.handleRequest(); }
     private int port;
     private List<RequestHandler> handlers = new ArrayList<>();
     private Statistics statistics;
@@ -13,15 +26,10 @@ class HttpServer {
     public HttpServer(int port, Statistics statistics) {
         this.port = port;
         this.statistics = statistics;
+        this.state = new StoppedServer(this);
+
     }
 
-    public void start() {
-        System.out.println("Server started on port " + port);
-    }
-
-    public void stop() {
-        System.out.println("Server stopped.");
-    }
 
     public HttpResponse handleRequest(HttpRequest request) {
         for (RequestHandler handler : handlers) {
