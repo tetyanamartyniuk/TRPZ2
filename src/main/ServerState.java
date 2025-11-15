@@ -1,15 +1,11 @@
 package src.main;
 
-abstract  class ServerState {
 
-    protected HttpServer server;
+import java.net.Socket;
 
-    public ServerState(HttpServer server) {
-        this.server = server;
-    }
-
-    public abstract void start();
-    public abstract void stop();
-    public abstract void handleRequest();
-
+public interface ServerState {
+    void start(Server server);
+    void stop(Server server);
+    void handleClient(Server server, Socket client);
 }
+

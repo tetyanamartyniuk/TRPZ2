@@ -1,38 +1,47 @@
 package src.main;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 import java.util.List;
 
 public class AdminPanel implements AdminInterface {
-    private HttpServer server;
-    private Statistics statistics;
+    private final Server server;
 
-    public AdminPanel(HttpServer server, Statistics statistics) {
+    public AdminPanel(Server server) {
         this.server = server;
-        this.statistics = statistics;
+    }
+
+//    @Override
+//    public String viewStatistics() {
+//        return statistics.getStats();
+//    }
+//
+//    @Override
+//    public List<Log> viewLogs() {
+//        return statistics.getLogs();
+//    }
+
+    @Override
+    public void manageServer(Server server) {
+        if (!server.isRunning()) {
+            new Thread(server::start).start(); // стартуємо сервер
+        } else {
+            server.stop(); // зупиняємо сервер
+        }
     }
 
     @Override
-    public String viewStatistics() {
-        return statistics.getStats();
+    public boolean isServerRunning(Server server) {
+        return server.isRunning();
     }
 
     @Override
-    public List<Log> viewLogs() {
-        return statistics.getLogs();
+    public void handleClient(Server server, Socket client) {
+        server.handleClient(client);             // делегує обробку клієнта серверу
     }
 
-    @Override
-    public void manageServer(HttpServer server) {
-        this.server = server;
-        server.start();
-        System.out.println("Server started by admin.");
-    }
 
-    @Override
-    public void configureServer(HttpServer server, String mode) {
-        this.server = server;
-        server.configure(mode);
-        System.out.println("Server mode changed to: " + mode);
-    }
 }

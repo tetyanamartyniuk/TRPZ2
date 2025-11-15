@@ -1,19 +1,44 @@
 package src.main;
 
-public class StoppedServer extends ServerState{
-    public StoppedServer(HttpServer server) {
-        super(server);
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class StoppedServer implements ServerState {
+
+    @Override
+    public void start(Server server) {
+
+        try {
+            ServerSocket socket = new ServerSocket(server.getPort());
+            server.setServerSocket(socket);
+
+            System.out.println("Server started on port " + server.getPort());
+
+            server.setRunning(true);
+            server.setState(new RunningServer());
+
+            while (server.isRunning()) {
+                Socket client = socket.accept();
+                System.out.println("Client connected: " + client.getInetAddress());
+                server.handleClient(client);
+            }
+
+        } catch (Exception e) {
+            if (server.isRunning()) {
+                System.out.println("Error during server start: " + e.getMessage());
+            }
+        } finally {
+            System.out.println("Server socket closed.");
+        }
     }
 
-    public void start() {
-        System.out.println("Запускаємо сервер");
-        server.setState(new RunningServer(server));
+    @Override
+    public void stop(Server server) {
+        System.out.println("Server already stopped");
     }
-    public void stop() {
-        System.out.println("Сервер вже зупинений");
-    }
-    public void handleRequest() {
-        System.out.println("Не можна обробляти запити, коли сервер зупинений");
+
+    @Override
+    public void handleClient(Server server, Socket client) {
+        System.out.println("Сервер не може приймати запити, адже він зупинений");
     }
 }
-

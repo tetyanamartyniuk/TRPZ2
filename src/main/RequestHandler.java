@@ -1,14 +1,18 @@
 package src.main;
 
-public class RequestHandler {
-    private HttpServer server;
+import java.util.Map;
 
-    public RequestHandler(HttpServer server) {
+public class RequestHandler {
+    private Server server;
+
+    public RequestHandler(Server server) {
         this.server = server;
     }
 
     public HttpResponse handle(HttpRequest request) {
-        return new HttpResponse(200, "Request handled successfully");
+        Map<String,String> headers = Map.of("Content-Type", "text/plain; charset=UTF-8");
+        return HttpResponseDirector.Ok("Request handled successfully", headers);
     }
 }
+
 

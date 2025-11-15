@@ -1,21 +1,30 @@
 package src.main;
 
-public class RunningServer extends ServerState{
+import java.net.Socket;
 
-    public RunningServer(HttpServer server){
-        super(server);
+public class RunningServer implements ServerState {
+
+    @Override
+    public void start(Server server) {
+        System.out.println("Сервер уже працює");
     }
 
-    public void start(){
-        System.out.println("Сервер уже запущений");
+    @Override
+    public void stop(Server server) {
+        System.out.println("Stopping server...");
+        server.setRunning(false);
+
+        try {
+            if (server.getServerSocket() != null) {
+                server.getServerSocket().close();
+            }
+        } catch (Exception ignored) {}
+
+        server.setState(new StoppedServer());
     }
 
-    public void stop(){
-        System.out.println("Зупиняємо сервер");
-        server.setState(new StoppedServer(server));
-    }
-
-    public void handleRequest() {
-        System.out.println("Обробляємо запити");
+    @Override
+    public void handleClient(Server server, Socket client) {
+        new Thread(() -> server.processClient(client)).start();
     }
 }

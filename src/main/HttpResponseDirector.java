@@ -53,4 +53,10 @@ public class HttpResponseDirector {
         builder.buildBody(null);
         return builder.build();
     }
+    public static HttpResponse ServiceUnavailable(String body, Map<String,String> headers) {
+        builder.buildStatus("503 Service Unavailable");
+        builder.buildHeaders(headers);
+        builder.buildBody(body);
+        return builder.build();
+    }
 }
