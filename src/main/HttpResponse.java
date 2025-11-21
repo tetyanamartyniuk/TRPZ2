@@ -1,4 +1,7 @@
 package src.main;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +18,12 @@ public class HttpResponse {
         }
 
 
-         public String toHttpString() {
+    public void send(OutputStream outputStream) throws IOException {
+        outputStream.write(toHttpString().getBytes(StandardCharsets.UTF_8));
+        outputStream.flush();
+    }
+
+    public String toHttpString() {
             StringBuilder sb = new StringBuilder();
             sb.append("HTTP/1.1 ").append(status).append("\r\n");
 
@@ -52,5 +60,7 @@ public class HttpResponse {
             return -1;
         }
     }
+
+
 
 }

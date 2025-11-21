@@ -1,16 +1,29 @@
 package src.main;
 
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 public class HttpResponseDirector {
 
     private static final HttpResponseBuilder builder = new HttpResponseBuilder();
 
     public static HttpResponse Ok(String body, Map<String, String> headers) {
+
+        if (headers == null)
+            headers = new HashMap<>();
+
+        byte[] bodyBytes = body.getBytes(StandardCharsets.UTF_8);
+
+        headers.put("Content-Type", "text/plain; charset=UTF-8");
+        headers.put("Content-Length", String.valueOf(bodyBytes.length));
+
         builder.buildStatus("200 OK");
         builder.buildHeaders(headers);
         builder.buildBody(body);
+
         return builder.build();
     }
+
 
     public static HttpResponse NotFound(Map<String, String> headers) {
         builder.buildStatus("404 Not Found");

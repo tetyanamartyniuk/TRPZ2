@@ -1,5 +1,6 @@
-//package src.main;
-//
-//public class HttpRoute {
-//    public HttpResponse execute(HttpRequest request);
-//}
+package src.main;
+
+
+public interface HttpRoute {
+    HttpResponse execute(HttpRequest request);
+}

@@ -1,16 +1,16 @@
-//package src.main;
-//
-//public class InternalMiddleware extends Middleware {
-//
-//    Map<String, HttpRequestCallback> routes;
-//
-//    public InternalMiddleware(Map<String, HttpRequestCallback> routes){
-//        this.routes = routes;
-//    }
-//
-//    @Override
-//    public Handler createHandler() {
-//        return new InternalHandler(routes);
-//    }
-//}
+package src.main;
+
+import java.util.Map;
+
+public class InternalMiddleware extends Middleware{
+    RouteComponent routes;
+    public InternalMiddleware(RouteComponent routes){
+        this.routes = routes;
+    }
+    @Override
+    public Handler createHandler() {
+        return new InternalHandler(routes);
+    }
+}
+
 
