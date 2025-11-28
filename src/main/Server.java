@@ -1,65 +1,111 @@
 package src.main;
 
+
+import src.main.repos.LogRepository;
+import src.main.repos.RequestBodyRepository;
+import src.main.repos.RequestRepository;
+import src.main.serverConfigs.ConfigHandler;
+import src.main.repos.StatisticsRepository;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 
 public class Server {
-    private int port;
 
     private boolean running;
-    private ServerState state = new StoppedServer();
     private ServerSocket serverSocket;
 
+    private final Logger logger = new Logger();
+
+    private ThreadPoolExecutor executorService;
+    private final ConfigHandler configHandler;
     private RouteComponent routes;
     private Middleware internalMiddleware;
+    private RequestRepository requestRepository;
+    private RequestBodyRepository requestBodyRepository;
+    private LogRepository logsRepository;
+    private StatisticsRepository statisticsRepository;
 
-    public Server(int port) {
-        this.port = port;
+    public Server() {
+        this.configHandler = new ConfigHandler();
+    }
+    public void setRepositories(
+            RequestRepository requestRepository,
+            RequestBodyRepository requestBodyRepository,
+            LogRepository logsRepository,
+            StatisticsRepository statisticsRepository) {
+
+        this.requestRepository = requestRepository;
+        this.requestBodyRepository = requestBodyRepository;
+        this.logsRepository = logsRepository;
+        this.statisticsRepository = statisticsRepository;
     }
 
-    public void setRoutes(RouteComponent routes) {
-        this.routes = routes;
-    }
-
-    public void start(){
-        state.start(this);
-
-    }
-
-    public void startAcceptLoop() {
+    public void start() {
         try {
-            serverSocket = new ServerSocket(port);
-            internalMiddleware = new InternalMiddleware(routes);
-
-            System.out.println("Server started on port " + port);
-
-            while (running) {
-                Socket client = serverSocket.accept();
-                state.handleClient(this, client);   // 🔥 Виклик стану!
+            if (this.routes == null) {
+                throw new IllegalStateException("Some routes must be added before starting the server.");
             }
-
-        } catch (IOException e) {
-            System.out.println("Error while running server: " + e.getMessage());
+            running = true;
+            logger.info("Starting HTTP server...");
+            serverSocket = new ServerSocket(configHandler.getPort(), configHandler.getNumberOfThreads());
+            internalMiddleware = new InternalMiddleware(requestRepository, requestBodyRepository, logsRepository, statisticsRepository, routes);
+            executorService = new ThreadPoolExecutor(configHandler.getNumberOfThreads(),
+                    configHandler.getNumberOfThreads(),
+                    0L, TimeUnit.MILLISECONDS,
+                    new LinkedBlockingQueue<>());
+            logger.info("Http Server started on port" + configHandler.getPort());
+            while (running) {
+                try {
+                    Socket client = serverSocket.accept();
+                    executorService.submit(() -> handleRequest(client));
+                } catch (IOException e) {
+                    if (running) {
+                        System.out.println("Error while accepting client: " + e.getMessage());
+                    }
+                    break;
+                }
+            }
+            } catch(IOException e){
+                System.out.println("Error while running server: " + e.getMessage());
+            }
         }
-    }
 
-    public void handleClient(Socket socket) {
+    public void handleRequest(Socket socket) {
         try {
             internalMiddleware.invokeRequest(socket);
-        } catch (Exception e) {
+            socket.close();
+        } catch (IOException e) {
+            logger.severe("Error handling request: " +
+                    e.getMessage());
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void setRunning(boolean running) {
-        this.running = running;
+    public void setRoutes(RouteComponent component) {
+        this.routes = component;
     }
 
-    public void setState(ServerState state) {
-        this.state = state;
-    }
+    public void stop() {
+        try {
+            logger.info("Stopping HTTP server...");
+            serverSocket.close();
+            executorService.shutdown();
+            logger.info("HTTP server stopped.");
+        }
+        catch (IOException e) {
+            logger.severe("Error stopping HTTP server: " +
+                    e.getMessage());
+        }
+    };
 
 
     public ServerSocket getServerSocket() {
@@ -69,17 +115,5 @@ public class Server {
     public void setServerSocket(ServerSocket serverSocket) {
         this.serverSocket = serverSocket;
     }
-    public void stop() {
-        try {
-            System.out.println("Stopping server...");
-            if (serverSocket != null && !serverSocket.isClosed()) {
-                serverSocket.close();
-            }
-            System.out.println("Server stopped.");
-        } catch (IOException e) {
-            System.out.println("Error stopping server: " + e.getMessage());
-        }
-    }
-
 
 }

@@ -17,7 +17,6 @@ public class HttpResponse {
             this.body = body;
         }
 
-
     public void send(OutputStream outputStream) throws IOException {
         outputStream.write(toHttpString().getBytes(StandardCharsets.UTF_8));
         outputStream.flush();

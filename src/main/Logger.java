@@ -19,9 +19,11 @@ public class Logger {
     public void error(String msg) {
         System.out.println("[ERROR] " + stamp() + " | " + msg);
     }
+    public void severe(String msg) {
+        System.err.println("[SEVERE] " + stamp() + " | " + msg); // ВИПРАВЛЕНО: Використання System.err
+    }
 
     private String stamp() {
         return LocalDateTime.now().format(fmt);
     }
 }
-

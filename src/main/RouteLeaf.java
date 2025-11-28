@@ -12,12 +12,15 @@ public class RouteLeaf implements RouteComponent {
 
     @Override
     public HttpResponse handle(HttpRequest request) {
-        if (route == null ||
-                !request.getPath().replaceAll("/", "")
-                        .equals(path.replaceAll("/", ""))) {
+        if (!request.getPath().equals(path)) {
             return null;
         }
         return route.execute(request);
+    }
+
+
+    public HttpRoute getHandler() {
+        return route;
     }
 
     @Override

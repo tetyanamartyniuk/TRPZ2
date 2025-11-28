@@ -2,6 +2,7 @@ package src.main;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RouteComposite implements RouteComponent{
@@ -16,11 +17,18 @@ public class RouteComposite implements RouteComponent{
     public HttpResponse handle(HttpRequest request){
         String requestPath = request.getPath();
 
-        if(!requestPath.startsWith(path)){
+        if (!requestPath.startsWith(path)) {
             return null;
         }
 
+
         String remainingPath = requestPath.substring(path.length());
+
+        if (remainingPath.isEmpty()) {
+            remainingPath = "/";
+        } else if (!remainingPath.startsWith("/")) {
+            remainingPath = "/" + remainingPath;
+        }
 
         for (RouteComponent component : componentList) {
             if (remainingPath.startsWith(component.getPath())) {
@@ -29,7 +37,8 @@ public class RouteComposite implements RouteComponent{
                                 request.getMethod(),
                                 remainingPath,
                                 request.getHeaders(),
-                                request.getBody()
+                                request.getBody(),
+                                request.getQueryParams()
                         )
                 );
             }
@@ -44,7 +53,8 @@ public class RouteComposite implements RouteComponent{
     }
 
     public void addChild(RouteComponent component) {
-        if (componentList.stream().anyMatch(c -> c.getPath() == component.getPath())) {
+        if (componentList.stream().anyMatch(c -> c.getPath().equals(component.getPath())))
+        {
             throw new IllegalArgumentException("Path is already taken");
         }
         componentList.add(component);
@@ -60,5 +70,10 @@ public class RouteComposite implements RouteComponent{
                 .findFirst()
                 .orElse(null);
     }
+
+    public List<RouteComponent> getChildren() {
+        return componentList;
+    }
+
 
 }
