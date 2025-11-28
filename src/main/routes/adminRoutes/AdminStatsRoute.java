@@ -6,7 +6,7 @@ import src.main.http.HttpRequest;
 import src.main.http.HttpResponse;
 import src.main.http.HttpResponseDirector;
 import src.main.http.HttpRoute;
-import src.main.repos.StatisticsRepository;
+import src.main.database.repos.StatisticsRepository;
 import src.main.statistics.Logger;
 
 import java.sql.SQLException;

@@ -20,7 +20,7 @@ public class Logger {
         System.out.println("[ERROR] " + stamp() + " | " + msg);
     }
     public void severe(String msg) {
-        System.err.println("[SEVERE] " + stamp() + " | " + msg); // ВИПРАВЛЕНО: Використання System.err
+        System.err.println("[SEVERE] " + stamp() + " | " + msg);
     }
 
     private String stamp() {

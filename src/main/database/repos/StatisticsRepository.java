@@ -1,4 +1,4 @@
-package src.main.repos;
+package src.main.database.repos;
 
 import src.main.statistics.ServerStats;
 

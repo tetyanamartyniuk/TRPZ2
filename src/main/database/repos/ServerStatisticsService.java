@@ -1,7 +1,8 @@
-package src.main.statistics;
+package src.main.database.repos;
 
 import src.main.database.DatabaseConnection;
-import src.main.repos.StatisticsRepository;
+import src.main.database.repos.StatisticsRepository;
+import src.main.statistics.ServerStats;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

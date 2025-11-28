@@ -6,18 +6,18 @@ import src.main.database.DatabaseHandler;
 import src.main.http.FileHandler;
 import src.main.http.RouteComposite;
 import src.main.http.RouteLeaf;
-import src.main.repos.LogRepository;
-import src.main.repos.RequestBodyRepository;
-import src.main.repos.RequestRepository;
-import src.main.repos.RequestRepositoryImpl;
+import src.main.database.repos.LogRepository;
+import src.main.database.repos.RequestBodyRepository;
+import src.main.database.repos.RequestRepository;
+import src.main.database.repos.RequestRepositoryImpl;
 import src.main.routes.DynamicRoute;
 import src.main.serverConfigs.ConfigHandler;
 import src.main.routes.HelloRoute;
 import src.main.routes.adminRoutes.AdminLoginHandlerRoute;
 import src.main.routes.adminRoutes.AdminLoginRoute;
 import src.main.routes.adminRoutes.AdminStatsRoute;
-import src.main.statistics.ServerStatisticsService;
-import src.main.repos.StatisticsRepository;
+import src.main.database.repos.ServerStatisticsService;
+import src.main.database.repos.StatisticsRepository;
 import src.main.server.Server;
 
 

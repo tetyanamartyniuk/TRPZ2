@@ -1,10 +1,10 @@
 package src.main.server;
 
 import src.main.http.RouteComponent;
-import src.main.repos.LogRepository;
-import src.main.repos.RequestBodyRepository;
-import src.main.repos.RequestRepository;
-import src.main.repos.StatisticsRepository;
+import src.main.database.repos.LogRepository;
+import src.main.database.repos.RequestBodyRepository;
+import src.main.database.repos.RequestRepository;
+import src.main.database.repos.StatisticsRepository;
 
 // Імпортуйте ваші інтерфейси/класи репозиторіїв
 // import src.main.repositories.RequestRepository;

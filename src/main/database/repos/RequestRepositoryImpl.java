@@ -1,4 +1,4 @@
-package src.main.repos;
+package src.main.database.repos;
 
 import org.json.JSONObject;
 import src.main.database.DatabaseConnection;
