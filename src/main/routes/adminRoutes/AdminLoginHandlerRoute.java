@@ -1,9 +1,9 @@
 package src.main.routes.adminRoutes;
 
-import src.main.HttpRequest;
-import src.main.HttpResponse;
-import src.main.HttpResponseDirector;
-import src.main.HttpRoute;
+import src.main.http.HttpRequest;
+import src.main.http.HttpResponse;
+import src.main.http.HttpResponseDirector;
+import src.main.http.HttpRoute;
 
 import java.util.HashMap;
 import java.util.Map;

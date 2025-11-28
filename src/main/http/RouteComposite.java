@@ -1,11 +1,13 @@
-package src.main;
+package src.main.http;
 
-import java.sql.Array;
+import src.main.http.HttpRequest;
+import src.main.http.HttpResponse;
+import src.main.http.RouteComponent;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class RouteComposite implements RouteComponent{
+public class RouteComposite implements RouteComponent {
     List<RouteComponent> componentList = new ArrayList<>();
     String path;
 

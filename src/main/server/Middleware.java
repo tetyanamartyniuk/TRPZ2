@@ -1,5 +1,8 @@
-package src.main;
+package src.main.server;
 
+import src.main.http.HttpRequest;
+import src.main.http.HttpRequestParser;
+import src.main.http.HttpResponse;
 import src.main.repos.LogRepository;
 import src.main.repos.RequestBodyRepository;
 import src.main.repos.RequestRepository;

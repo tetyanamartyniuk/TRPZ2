@@ -1,4 +1,7 @@
-package src.main;
+package src.main.http;
+
+import src.main.http.HttpResponse;
+import src.main.http.HttpResponseBuilder;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

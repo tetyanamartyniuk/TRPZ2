@@ -1,6 +1,11 @@
 package src.main;
 
 import src.main.auth.AuthService;
+import src.main.database.DatabaseConnection;
+import src.main.database.DatabaseHandler;
+import src.main.http.FileHandler;
+import src.main.http.RouteComposite;
+import src.main.http.RouteLeaf;
 import src.main.repos.LogRepository;
 import src.main.repos.RequestBodyRepository;
 import src.main.repos.RequestRepository;
@@ -11,8 +16,9 @@ import src.main.routes.HelloRoute;
 import src.main.routes.adminRoutes.AdminLoginHandlerRoute;
 import src.main.routes.adminRoutes.AdminLoginRoute;
 import src.main.routes.adminRoutes.AdminStatsRoute;
-import src.main.repos.DatabaseStatisticsRepository;
+import src.main.statistics.ServerStatisticsService;
 import src.main.repos.StatisticsRepository;
+import src.main.server.Server;
 
 
 public class Main {
@@ -39,7 +45,7 @@ public class Main {
         RequestBodyRepository requestBodyRepository = new RequestBodyRepository(db);
         LogRepository logsRepository = new LogRepository(db);
 
-        StatisticsRepository statisticsRepository = new DatabaseStatisticsRepository(db);
+        StatisticsRepository statisticsRepository = new ServerStatisticsService(db);
 
         Server server = new Server();
 

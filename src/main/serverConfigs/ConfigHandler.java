@@ -32,18 +32,7 @@ public class ConfigHandler {
         return reader.getString("databasePassword");
     }
 
-//    public int getServerMonitorPort() {
-//        return reader.getInt("monitorPort");
-//    }
-//
-//    public String getServerMonitorUrl() {
-//        return reader.getString("monitorUrl");
-//    }
-
     public String getAdminUsername(){return reader.getString("adminUsername");}
 
     public String getAdminPassword(){return reader.getString("adminPassword");}
-
-
-
 }

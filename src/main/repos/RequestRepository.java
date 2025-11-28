@@ -1,6 +1,6 @@
 package src.main.repos;
 
-import src.main.HttpRequest;
+import src.main.http.HttpRequest;
 import java.sql.SQLException;
 
 public interface RequestRepository {

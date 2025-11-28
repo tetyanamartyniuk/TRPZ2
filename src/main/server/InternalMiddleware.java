@@ -1,5 +1,6 @@
-package src.main;
+package src.main.server;
 
+import src.main.http.RouteComponent;
 import src.main.repos.LogRepository;
 import src.main.repos.RequestBodyRepository;
 import src.main.repos.RequestRepository;

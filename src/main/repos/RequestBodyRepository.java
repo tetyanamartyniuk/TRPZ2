@@ -1,6 +1,6 @@
 package src.main.repos;
 
-import src.main.DatabaseConnection;
+import src.main.database.DatabaseConnection;
 
 import java.sql.*;
 

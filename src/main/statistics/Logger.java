@@ -1,4 +1,4 @@
-package src.main;
+package src.main.statistics;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

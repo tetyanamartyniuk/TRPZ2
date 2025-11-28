@@ -1,8 +1,9 @@
-package src.main;
+package src.main.server;
 
-import java.io.FileNotFoundException;
+import src.main.http.*;
+import src.main.statistics.Logger;
+
 import java.io.IOException;
-import java.util.Map;
 
 public class InternalHandler implements Handler {
 

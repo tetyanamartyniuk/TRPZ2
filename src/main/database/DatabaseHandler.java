@@ -1,4 +1,6 @@
-package src.main;
+package src.main.database;
+
+import src.main.statistics.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;

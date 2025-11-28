@@ -1,4 +1,9 @@
-package src.main;
+package src.main.http;
+
+import src.main.http.HttpRequest;
+import src.main.http.HttpResponse;
+import src.main.http.HttpRoute;
+import src.main.http.RouteComponent;
 
 public class RouteLeaf implements RouteComponent {
 

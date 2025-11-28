@@ -2,7 +2,7 @@ package src.main.routes;
 
 
 import org.thymeleaf.context.Context;
-import src.main.*;
+import src.main.http.*;
 
 public class DynamicRoute implements HttpRoute {
         private final ThymeleafRenderer renderer = new ThymeleafRenderer();

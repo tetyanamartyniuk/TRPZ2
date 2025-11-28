@@ -1,7 +1,8 @@
-package src.main.repos;
+package src.main.statistics;
 
-import src.main.DatabaseConnection;
-import src.main.statistics.ServerStats;
+import src.main.database.DatabaseConnection;
+import src.main.repos.StatisticsRepository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,11 +10,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class DatabaseStatisticsRepository implements StatisticsRepository {
+public class ServerStatisticsService implements StatisticsRepository {
 
     private final DatabaseConnection db;
 
-    public DatabaseStatisticsRepository(DatabaseConnection db) {
+    public ServerStatisticsService(DatabaseConnection db) {
         this.db = db;
     }
 

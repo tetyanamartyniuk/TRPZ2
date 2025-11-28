@@ -1,9 +1,8 @@
 package src.main.repos;
 
 import org.json.JSONObject;
-import src.main.DatabaseConnection;
-import src.main.HttpRequest;
-import src.main.repos.RequestRepository;
+import src.main.database.DatabaseConnection;
+import src.main.http.HttpRequest;
 
 import java.sql.*;
 

@@ -1,13 +1,16 @@
 package src.main.routes.adminRoutes;
 
-import src.main.*;
 import src.main.auth.AuthUtils;
 import src.main.auth.SessionStore;
+import src.main.http.HttpRequest;
+import src.main.http.HttpResponse;
+import src.main.http.HttpResponseDirector;
+import src.main.http.HttpRoute;
 import src.main.repos.StatisticsRepository;
+import src.main.statistics.Logger;
 
 import java.sql.SQLException;
 import java.util.Collections;
-import java.util.Map;
 
 public class AdminStatsRoute implements HttpRoute {
 

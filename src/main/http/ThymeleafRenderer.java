@@ -1,4 +1,4 @@
-package src.main;
+package src.main.http;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;

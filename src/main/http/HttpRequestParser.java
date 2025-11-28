@@ -1,4 +1,6 @@
-package src.main;
+package src.main.http;
+
+import src.main.statistics.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
